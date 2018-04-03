@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/client/index.css"],"names":[],"mappings":"AAAA,KACE,WAAa","file":"statics/css/index.css","sourcesContent":["html {\n  height: 100%;\n}\n\n\n\n// WEBPACK FOOTER //\n// ./src/client/index.css"],"sourceRoot":""}
