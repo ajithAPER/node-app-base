@@ -2,6 +2,9 @@
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
+/******/ 	// object to store loaded and loading wasm modules
+/******/ 	var installedWasmModules = {};
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -44,6 +47,11 @@
 /******/ 		}
 /******/ 	};
 /******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -59,98 +67,218 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/";
 /******/
+/******/ 	// object with all compiled WebAssembly.Modules
+/******/ 	__webpack_require__.w = {};
+/******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/server/index.js");
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ "./node_modules/css-loader/lib/css-base.js":
+/*!*************************************************!*\
+  !*** ./node_modules/css-loader/lib/css-base.js ***!
+  \*************************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("express");
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
 
-module.exports = require("react");
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("http-proxy-middleware");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/core-js/object/get-prototype-of");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/helpers/classCallCheck");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/helpers/createClass");
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/helpers/possibleConstructorReturn");
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/helpers/inherits");
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = require("prop-types");
-
-/***/ }),
-/* 9 */
+/***/ "./src/config/index.js":
+/*!*****************************!*\
+  !*** ./src/config/index.js ***!
+  \*****************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _regenerator = __webpack_require__(10);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _assign = __webpack_require__(/*! babel-runtime/core-js/object/assign */ "babel-runtime/core-js/object/assign");
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _public = __webpack_require__(/*! ./public */ "./src/config/public.js");
+
+var _public2 = _interopRequireDefault(_public);
+
+var _private = __webpack_require__(/*! ./private */ "./src/config/private.js");
+
+var _private2 = _interopRequireDefault(_private);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var config = void 0;
+
+if (true) {
+  config = (0, _assign2.default)({}, _public2.default, _private2.default);
+} else {}
+
+exports.default = config;
+
+/***/ }),
+
+/***/ "./src/config/private.js":
+/*!*******************************!*\
+  !*** ./src/config/private.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var config = {
+  'webapp_port': 3000
+};
+
+exports.default = config;
+
+/***/ }),
+
+/***/ "./src/config/public.js":
+/*!******************************!*\
+  !*** ./src/config/public.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var config = {};
+
+exports.default = config;
+
+/***/ }),
+
+/***/ "./src/server/index.js":
+/*!*****************************!*\
+  !*** ./src/server/index.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _regenerator = __webpack_require__(/*! babel-runtime/regenerator */ "babel-runtime/regenerator");
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _asyncToGenerator2 = __webpack_require__(11);
+var _asyncToGenerator2 = __webpack_require__(/*! babel-runtime/helpers/asyncToGenerator */ "babel-runtime/helpers/asyncToGenerator");
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-__webpack_require__(12);
+__webpack_require__(/*! source-map-support/register */ "source-map-support/register");
 
-var _express = __webpack_require__(0);
+var _express = __webpack_require__(/*! express */ "express");
 
 var _express2 = _interopRequireDefault(_express);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(/*! lodash */ "lodash");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _config = __webpack_require__(14);
+var _config = __webpack_require__(/*! ../config */ "./src/config/index.js");
 
 var _config2 = _interopRequireDefault(_config);
 
-var _default = __webpack_require__(18);
+var _default = __webpack_require__(/*! ./routes/default.js */ "./src/server/routes/default.js");
 
 var allRoutes0 = _interopRequireWildcard(_default);
 
-var _statics = __webpack_require__(23);
+var _statics = __webpack_require__(/*! ./routes/statics.js */ "./src/server/routes/statics.js");
 
 var allRoutes1 = _interopRequireWildcard(_statics);
 
@@ -207,126 +335,12 @@ init().then(function () {
 });
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
 
-module.exports = require("babel-runtime/regenerator");
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/helpers/asyncToGenerator");
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-module.exports = require("source-map-support/register");
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _assign = __webpack_require__(15);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-var _public = __webpack_require__(16);
-
-var _public2 = _interopRequireDefault(_public);
-
-var _private = __webpack_require__(17);
-
-var _private2 = _interopRequireDefault(_private);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var config = void 0;
-
-if (true) {
-  config = (0, _assign2.default)({}, _public2.default, _private2.default);
-} else {
-  config = (0, _assign2.default)({}, _public2.default);
-}
-
-exports.default = config;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/core-js/object/assign");
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var config = {};
-
-exports.default = config;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var config = {
-  'webapp_port': 3000
-};
-
-exports.default = config;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.route = exports.url = undefined;
-
-var _express = __webpack_require__(0);
-
-var _default = __webpack_require__(19);
-
-var Router = (0, _express.Router)();
-
-Router.use(_default.defaultResponse);
-
-var url = exports.url = "";
-
-var route = exports.route = Router;
-
-/***/ }),
-/* 19 */
+/***/ "./src/server/middlewares/default.js":
+/*!*******************************************!*\
+  !*** ./src/server/middlewares/default.js ***!
+  \*******************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -337,23 +351,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.defaultResponse = undefined;
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(/*! react */ "react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(20);
+var _server = __webpack_require__(/*! react-dom/server */ "react-dom/server");
 
 var _server2 = _interopRequireDefault(_server);
 
-var _httpProxyMiddleware = __webpack_require__(2);
+var _httpProxyMiddleware = __webpack_require__(/*! http-proxy-middleware */ "http-proxy-middleware");
 
 var _httpProxyMiddleware2 = _interopRequireDefault(_httpProxyMiddleware);
 
-var _Html = __webpack_require__(21);
+var _Html = __webpack_require__(/*! ../../universal/components/Html */ "./src/universal/components/Html/index.js");
 
 var _Html2 = _interopRequireDefault(_Html);
 
-var _Splash = __webpack_require__(22);
+var _Splash = __webpack_require__(/*! ../../universal/components/Splash */ "./src/universal/components/Splash/index.js");
 
 var _Splash2 = _interopRequireDefault(_Splash);
 
@@ -361,7 +375,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var defaultResponse = exports.defaultResponse = function defaultResponse(req, res) {
   var html = _react2.default.createElement(_Html2.default, {
-    content: _react2.default.createElement(_Splash2.default, null)
+    content: _Splash2.default
   });
 
   res.status(200);
@@ -370,13 +384,82 @@ var defaultResponse = exports.defaultResponse = function defaultResponse(req, re
 };
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports) {
 
-module.exports = require("react-dom/server");
+/***/ "./src/server/routes/default.js":
+/*!**************************************!*\
+  !*** ./src/server/routes/default.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.route = exports.url = undefined;
+
+var _express = __webpack_require__(/*! express */ "express");
+
+var _default = __webpack_require__(/*! ../middlewares/default */ "./src/server/middlewares/default.js");
+
+var Router = (0, _express.Router)();
+
+Router.use(_default.defaultResponse);
+
+var url = exports.url = "";
+
+var route = exports.route = Router;
 
 /***/ }),
-/* 21 */
+
+/***/ "./src/server/routes/statics.js":
+/*!**************************************!*\
+  !*** ./src/server/routes/statics.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.route = exports.url = undefined;
+
+var _express = __webpack_require__(/*! express */ "express");
+
+var _express2 = _interopRequireDefault(_express);
+
+var _path = __webpack_require__(/*! path */ "path");
+
+var _path2 = _interopRequireDefault(_path);
+
+var _httpProxyMiddleware = __webpack_require__(/*! http-proxy-middleware */ "http-proxy-middleware");
+
+var _httpProxyMiddleware2 = _interopRequireDefault(_httpProxyMiddleware);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Router = (0, _express.Router)();
+
+if (false) {} else {
+  Router.use((0, _httpProxyMiddleware2.default)({ target: 'http://localhost:3001', pathRewrite: { '^/statics': '' } }));
+}
+
+var url = exports.url = "/statics";
+
+var route = exports.route = Router;
+
+/***/ }),
+
+/***/ "./src/universal/components/Html/index.js":
+/*!************************************************!*\
+  !*** ./src/universal/components/Html/index.js ***!
+  \************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -386,33 +469,37 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getPrototypeOf = __webpack_require__(3);
+var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ "babel-runtime/core-js/object/get-prototype-of");
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = __webpack_require__(4);
+var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ "babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(5);
+var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "babel-runtime/helpers/createClass");
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = __webpack_require__(6);
+var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ "babel-runtime/helpers/possibleConstructorReturn");
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(7);
+var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ "babel-runtime/helpers/inherits");
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(/*! react */ "react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(8);
+var _propTypes = __webpack_require__(/*! prop-types */ "prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _styles = __webpack_require__(/*! ./styles.css */ "./src/universal/components/Html/styles.css");
+
+var _styles2 = _interopRequireDefault(_styles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -430,11 +517,7 @@ var Html = function (_React$Component) {
       return _react2.default.createElement(
         'html',
         {
-          lang: 'en',
-          style: {
-            height: "100%",
-            width: "100%"
-          }
+          lang: 'en'
         },
         _react2.default.createElement(
           'head',
@@ -445,25 +528,15 @@ var Html = function (_React$Component) {
         ),
         _react2.default.createElement(
           'body',
-          {
-            style: {
-              height: "100%",
-              width: "100%",
-              margin: 0
-            }
-          },
+          null,
           _react2.default.createElement(
             'div',
             {
-              style: {
-                height: "100%",
-                width: "100%"
-              },
               id: 'application'
             },
-            this.props.content
+            _react2.default.createElement(this.props.content, null)
           ),
-          _react2.default.createElement('script', { src: '/statics/index.js', charSet: 'UTF-8' })
+          _react2.default.createElement('script', { src: '/statics/js/index.js', charSet: 'UTF-8' })
         )
       );
     }
@@ -472,13 +545,37 @@ var Html = function (_React$Component) {
 }(_react2.default.Component);
 
 Html.propTypes = {
-  content: _propTypes2.default.object.isRequired
+  content: _propTypes2.default.func.isRequired
 };
 
 exports.default = Html;
 
 /***/ }),
-/* 22 */
+
+/***/ "./src/universal/components/Html/styles.css":
+/*!**************************************************!*\
+  !*** ./src/universal/components/Html/styles.css ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "html {\n  min-height: 100%;\n  min-width: 100%;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./src/universal/components/Splash/index.js":
+/*!**************************************************!*\
+  !*** ./src/universal/components/Splash/index.js ***!
+  \**************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -488,31 +585,31 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getPrototypeOf = __webpack_require__(3);
+var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ "babel-runtime/core-js/object/get-prototype-of");
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = __webpack_require__(4);
+var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ "babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(5);
+var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "babel-runtime/helpers/createClass");
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = __webpack_require__(6);
+var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ "babel-runtime/helpers/possibleConstructorReturn");
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(7);
+var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ "babel-runtime/helpers/inherits");
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(/*! react */ "react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(8);
+var _propTypes = __webpack_require__(/*! prop-types */ "prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -544,53 +641,182 @@ Splash.propTypes = {};
 exports.default = Splash;
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+/***/ "babel-runtime/core-js/object/assign":
+/*!******************************************************!*\
+  !*** external "babel-runtime/core-js/object/assign" ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.route = exports.url = undefined;
-
-var _express = __webpack_require__(0);
-
-var _express2 = _interopRequireDefault(_express);
-
-var _path = __webpack_require__(24);
-
-var _path2 = _interopRequireDefault(_path);
-
-var _httpProxyMiddleware = __webpack_require__(2);
-
-var _httpProxyMiddleware2 = _interopRequireDefault(_httpProxyMiddleware);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Router = (0, _express.Router)();
-
-if (true) {
-  Router.get('/index.js', function (req, res, next) {
-    return res.sendFile(_path2.default.join(process.cwd(), 'build/client/index.js'));
-  });
-  Router.use(_express2.default.static(_path2.default.join(process.cwd(), '/build/client/statics')));
-} else {
-  Router.use('/index.js', (0, _httpProxyMiddleware2.default)({ target: 'http://localhost:3001', pathRewrite: { '^/statics': '' } }));
-  Router.use('/', (0, _httpProxyMiddleware2.default)({ target: 'http://localhost:3001' }));
-}
-
-var url = exports.url = "/statics";
-
-var route = exports.route = Router;
+module.exports = require("babel-runtime/core-js/object/assign");
 
 /***/ }),
-/* 24 */
+
+/***/ "babel-runtime/core-js/object/get-prototype-of":
+/*!****************************************************************!*\
+  !*** external "babel-runtime/core-js/object/get-prototype-of" ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/core-js/object/get-prototype-of");
+
+/***/ }),
+
+/***/ "babel-runtime/helpers/asyncToGenerator":
+/*!*********************************************************!*\
+  !*** external "babel-runtime/helpers/asyncToGenerator" ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/helpers/asyncToGenerator");
+
+/***/ }),
+
+/***/ "babel-runtime/helpers/classCallCheck":
+/*!*******************************************************!*\
+  !*** external "babel-runtime/helpers/classCallCheck" ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/helpers/classCallCheck");
+
+/***/ }),
+
+/***/ "babel-runtime/helpers/createClass":
+/*!****************************************************!*\
+  !*** external "babel-runtime/helpers/createClass" ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/helpers/createClass");
+
+/***/ }),
+
+/***/ "babel-runtime/helpers/inherits":
+/*!*************************************************!*\
+  !*** external "babel-runtime/helpers/inherits" ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/helpers/inherits");
+
+/***/ }),
+
+/***/ "babel-runtime/helpers/possibleConstructorReturn":
+/*!******************************************************************!*\
+  !*** external "babel-runtime/helpers/possibleConstructorReturn" ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/helpers/possibleConstructorReturn");
+
+/***/ }),
+
+/***/ "babel-runtime/regenerator":
+/*!********************************************!*\
+  !*** external "babel-runtime/regenerator" ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/regenerator");
+
+/***/ }),
+
+/***/ "express":
+/*!**************************!*\
+  !*** external "express" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+
+/***/ "http-proxy-middleware":
+/*!****************************************!*\
+  !*** external "http-proxy-middleware" ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("http-proxy-middleware");
+
+/***/ }),
+
+/***/ "lodash":
+/*!*************************!*\
+  !*** external "lodash" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
+/***/ }),
+
+/***/ "prop-types":
+/*!*****************************!*\
+  !*** external "prop-types" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("prop-types");
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "react" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+
+/***/ "react-dom/server":
+/*!***********************************!*\
+  !*** external "react-dom/server" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-dom/server");
+
+/***/ }),
+
+/***/ "source-map-support/register":
+/*!**********************************************!*\
+  !*** external "source-map-support/register" ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("source-map-support/register");
+
 /***/ })
-/******/ ]);
+
+/******/ });
 //# sourceMappingURL=index.js.map

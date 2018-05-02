@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './styles.css';
+
 class Html extends React.Component {
   render() {
     return (
       <html
         lang="en"
-        style={{
-          height: "100%",
-          width: "100%"
-        }}
         >
         <head>
           <meta charSet="utf-8" />
@@ -17,22 +15,14 @@ class Html extends React.Component {
           <link rel="stylesheet" type="text/css" href="/statics/css/index.css" />
         </head>
         <body
-          style={{
-            height: "100%",
-            width: "100%",
-            margin: 0
-          }}
           >
           <div
-            style={{
-              height: "100%",
-              width: "100%"
-            }}
             id="application"
             >
-            {this.props.content}
+            <this.props.content
+              />
           </div>
-          <script src="/statics/index.js" charSet="UTF-8" />
+          <script src="/statics/js/index.js" charSet="UTF-8" />
         </body>
       </html>
     );
@@ -40,7 +30,7 @@ class Html extends React.Component {
 }
 
 Html.propTypes = {
-  content: PropTypes.object.isRequired
+  content: PropTypes.func.isRequired
 };
 
 export default Html;

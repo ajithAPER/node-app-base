@@ -5,7 +5,9 @@ import {
 
 import Splash from '../universal/components/Splash';
 
-import './index.css';
+import indexCss from './index.css';
+
+import sampleImg from './sample.jpg';
 
 render(
   (

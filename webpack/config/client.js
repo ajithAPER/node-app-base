@@ -1,7 +1,9 @@
 const Webpack = require('webpack');
 const Path  = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = ( process.env.NODE_ENV !== 'production' );
 
@@ -11,21 +13,20 @@ const init = (dir) => {
     devtool: isDev ? 'cheap-module-source-map' : 'source-map',
     entry: Path.join( dir, '/src/client/index.js' ),
     output: {
-      path: Path.join( dir, 'build/client' ),
-      filename: 'index.js',
-      publicPath: '/',
+      path: Path.join( dir, 'build/statics/' ),
+      filename: 'js/index.js'
     },
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.(js|jsx)$/,
           exclude: /(node_modules)/,
           use: {
             loader: 'babel-loader'
           }
         },
         {
-          test: /\.js$/,
+          test: /\.(js|jsx)$/,
           exclude: /(node_modules)/,
           use: {
             loader: 'import-glob'
@@ -40,27 +41,24 @@ const init = (dir) => {
         },
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract( {
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  importLoaders: 1,
-                  minimize: !isDev,
-                  sourceMap: !isDev,
-                }
-              },
-            ]
-          } )
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+                publicPath: '/css/'
+              }
+            }
+          ]
         },
         {
           test: /\.(png|jpg|gif)$/,
           use: {
             loader: 'file-loader',
             options: {
-              outputPath: 'statics/images/',
-              publicPath: '/images/',
+              outputPath: 'images/',
+              publicPath: '/statics/images/',
               name: '[hash].[ext]'
             }
           }
@@ -70,8 +68,8 @@ const init = (dir) => {
           use: {
             loader: 'file-loader',
             options: {
-              outputPath: 'statics/fonts/',
-              publicPath: '/fonts/',
+              outputPath: 'fonts/',
+              publicPath: '/statics/fonts/',
               name: '[hash].[ext]'
             }
           }
@@ -85,26 +83,36 @@ const init = (dir) => {
           'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }
       ),
-      new ExtractTextPlugin({
-        filename: 'statics/css/index.css',
+      new MiniCssExtractPlugin({
+        filename: "css/index.css",
+        chunkFilename: "index.css"
       }),
-      !isDev && new Webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-        },
-        mangle: {
-          safari10: true,
-        },
-        output: {
-          comments: false,
-          ascii_only: true
-        }
-      }),
-
-    ].filter(Boolean),
+    ],
+    optimization: {
+      minimizer: [
+        new UglifyJSPlugin(
+          {
+            sourceMap: true,
+            uglifyOptions: {
+              compress: {
+                warnings: false,
+              },
+              mangle: {
+                safari10: true,
+              },
+              output: {
+                comments: false,
+                ascii_only: true
+              }
+            }
+          }
+        ),
+        new OptimizeCSSAssetsPlugin({})
+      ]
+    },
     devServer: {
-      disableHostCheck: true,
-      publicPath: '/'
+      contentBase: Path.join( dir, 'build/statics/' ),
+      disableHostCheck: true
     }
   };
 }

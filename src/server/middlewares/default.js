@@ -8,7 +8,7 @@ import Splash from '../../universal/components/Splash';
 export const defaultResponse = ( req, res ) => {
   const html = (
     <Html
-      content={<Splash />}
+      content={Splash}
       />
   );
 

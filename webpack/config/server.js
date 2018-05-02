@@ -33,6 +33,12 @@ const init = (dir) => {
           use: {
             loader: 'import-glob'
           }
+        },
+        {
+          test: /\.css$/,
+          use: [
+            'css-loader'
+          ]
         }
       ]
     },
