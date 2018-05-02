@@ -349,7 +349,7 @@ init().then(function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.defaultResponse = undefined;
+exports.mwDefault = undefined;
 
 var _react = __webpack_require__(/*! react */ "react");
 
@@ -373,7 +373,7 @@ var _Splash2 = _interopRequireDefault(_Splash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var defaultResponse = exports.defaultResponse = function defaultResponse(req, res) {
+var mwDefault = exports.mwDefault = function mwDefault(req, res) {
   var html = _react2.default.createElement(_Html2.default, {
     content: _Splash2.default
   });
@@ -382,6 +382,45 @@ var defaultResponse = exports.defaultResponse = function defaultResponse(req, re
   res.send('<!doctype html>\n' + _server2.default.renderToStaticMarkup(html));
   res.end();
 };
+
+/***/ }),
+
+/***/ "./src/server/middlewares/statics.js":
+/*!*******************************************!*\
+  !*** ./src/server/middlewares/statics.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.mwStatics = undefined;
+
+var _express = __webpack_require__(/*! express */ "express");
+
+var _express2 = _interopRequireDefault(_express);
+
+var _path = __webpack_require__(/*! path */ "path");
+
+var _path2 = _interopRequireDefault(_path);
+
+var _httpProxyMiddleware = __webpack_require__(/*! http-proxy-middleware */ "http-proxy-middleware");
+
+var _httpProxyMiddleware2 = _interopRequireDefault(_httpProxyMiddleware);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mwStatics = void 0;
+
+if (false) {} else {
+  exports.mwStatics = mwStatics = (0, _httpProxyMiddleware2.default)({ target: 'http://localhost:3001', pathRewrite: { '^/statics': '' } });
+}
+
+exports.mwStatics = mwStatics;
 
 /***/ }),
 
@@ -406,7 +445,7 @@ var _default = __webpack_require__(/*! ../middlewares/default */ "./src/server/m
 
 var Router = (0, _express.Router)();
 
-Router.use(_default.defaultResponse);
+Router.use(_default.mwDefault);
 
 var url = exports.url = "";
 
@@ -431,23 +470,11 @@ exports.route = exports.url = undefined;
 
 var _express = __webpack_require__(/*! express */ "express");
 
-var _express2 = _interopRequireDefault(_express);
-
-var _path = __webpack_require__(/*! path */ "path");
-
-var _path2 = _interopRequireDefault(_path);
-
-var _httpProxyMiddleware = __webpack_require__(/*! http-proxy-middleware */ "http-proxy-middleware");
-
-var _httpProxyMiddleware2 = _interopRequireDefault(_httpProxyMiddleware);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _statics = __webpack_require__(/*! ../middlewares/statics */ "./src/server/middlewares/statics.js");
 
 var Router = (0, _express.Router)();
 
-if (false) {} else {
-  Router.use((0, _httpProxyMiddleware2.default)({ target: 'http://localhost:3001', pathRewrite: { '^/statics': '' } }));
-}
+Router.use(_statics.mwStatics);
 
 var url = exports.url = "/statics";
 

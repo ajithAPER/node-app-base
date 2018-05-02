@@ -5,7 +5,7 @@ import Proxy from 'http-proxy-middleware';
 import Html from '../../universal/components/Html';
 import Splash from '../../universal/components/Splash';
 
-export const defaultResponse = ( req, res ) => {
+export const mwDefault = ( req, res ) => {
   const html = (
     <Html
       content={Splash}
