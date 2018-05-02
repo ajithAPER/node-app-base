@@ -3,12 +3,12 @@ import {
 } from 'express';
 
 import {
-  mwDefault
+  mwDefault as MwDefault
 } from '../middlewares/default';
 
 const Router = router();
 
-Router.use( mwDefault )
+Router.use( MwDefault )
 
 export const url = "";
 

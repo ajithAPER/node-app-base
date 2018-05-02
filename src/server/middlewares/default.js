@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Proxy from 'http-proxy-middleware';
 
-import Html from '../../universal/components/Html';
-import Splash from '../../universal/components/Splash';
+import Html from '../../universal/components/html';
+import Splash from '../../universal/components/splash';
 
 export const mwDefault = ( req, res ) => {
   const html = (

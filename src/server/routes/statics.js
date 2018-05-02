@@ -3,12 +3,12 @@ import {
 } from 'express';
 
 import {
-  mwStatics
+  mwStatics as MwStatics
 } from '../middlewares/statics';
 
 const Router = router();
 
-Router.use( mwStatics );
+Router.use( MwStatics );
 
 export const url = "/statics";
 

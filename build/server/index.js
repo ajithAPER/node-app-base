@@ -77,93 +77,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/css-loader/lib/css-base.js":
-/*!*************************************************!*\
-  !*** ./node_modules/css-loader/lib/css-base.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
 /***/ "./src/config/index.js":
 /*!*****************************!*\
   !*** ./src/config/index.js ***!
@@ -242,6 +155,114 @@ exports.default = config;
 
 /***/ }),
 
+/***/ "./src/server/graphql/index.js":
+/*!*************************************!*\
+  !*** ./src/server/graphql/index.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _graphqlCompose = __webpack_require__(/*! graphql-compose */ "graphql-compose");
+
+var _lodash = __webpack_require__(/*! lodash */ "lodash");
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _test = __webpack_require__(/*! ./queries/test.js */ "./src/server/graphql/queries/test.js");
+
+var AllQueries0 = _interopRequireWildcard(_test);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AllQueries = [AllQueries0];
+
+//initailizing all queries
+var queries = {};
+
+_lodash2.default.each(AllQueries, function (_ref) {
+  var query = _ref.default;
+
+  queries[query.name] = query;
+});
+
+_graphqlCompose.GQC.rootQuery().addFields(queries);
+
+exports.default = _graphqlCompose.GQC.buildSchema();
+
+/***/ }),
+
+/***/ "./src/server/graphql/queries/test.js":
+/*!********************************************!*\
+  !*** ./src/server/graphql/queries/test.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _regenerator = __webpack_require__(/*! babel-runtime/regenerator */ "babel-runtime/regenerator");
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = __webpack_require__(/*! babel-runtime/helpers/asyncToGenerator */ "babel-runtime/helpers/asyncToGenerator");
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _graphql = __webpack_require__(/*! graphql */ "graphql");
+
+var _graphqlCompose = __webpack_require__(/*! graphql-compose */ "graphql-compose");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var test = new _graphqlCompose.Resolver({
+  name: 'test',
+  type: _graphql.GraphQLString,
+  resolve: function () {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(_ref) {
+      var source = _ref.source,
+          args = _ref.args,
+          context = _ref.context,
+          info = _ref.info;
+      return _regenerator2.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              return _context.abrupt('return', "Working");
+
+            case 1:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, undefined);
+    }));
+
+    function resolve(_x) {
+      return _ref2.apply(this, arguments);
+    }
+
+    return resolve;
+  }()
+});
+
+exports.default = test;
+
+/***/ }),
+
 /***/ "./src/server/index.js":
 /*!*****************************!*\
   !*** ./src/server/index.js ***!
@@ -276,17 +297,25 @@ var _config2 = _interopRequireDefault(_config);
 
 var _default = __webpack_require__(/*! ./routes/default.js */ "./src/server/routes/default.js");
 
-var allRoutes0 = _interopRequireWildcard(_default);
+var AllRoutes0 = _interopRequireWildcard(_default);
+
+var _graphiql = __webpack_require__(/*! ./routes/graphiql.js */ "./src/server/routes/graphiql.js");
+
+var AllRoutes1 = _interopRequireWildcard(_graphiql);
+
+var _graphql = __webpack_require__(/*! ./routes/graphql.js */ "./src/server/routes/graphql.js");
+
+var AllRoutes2 = _interopRequireWildcard(_graphql);
 
 var _statics = __webpack_require__(/*! ./routes/statics.js */ "./src/server/routes/statics.js");
 
-var allRoutes1 = _interopRequireWildcard(_statics);
+var AllRoutes3 = _interopRequireWildcard(_statics);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var allRoutes = [allRoutes0, allRoutes1];
+var AllRoutes = [AllRoutes0, AllRoutes1, AllRoutes2, AllRoutes3];
 
 var app = new _express2.default();
 
@@ -298,7 +327,7 @@ var init = function () {
           case 0:
 
             //Server route definations
-            _lodash2.default.each(_lodash2.default.sortBy(allRoutes, [function (_ref2) {
+            _lodash2.default.each(_lodash2.default.sortBy(AllRoutes, [function (_ref2) {
               var route = _ref2.route,
                   url = _ref2.url;
 
@@ -363,25 +392,58 @@ var _httpProxyMiddleware = __webpack_require__(/*! http-proxy-middleware */ "htt
 
 var _httpProxyMiddleware2 = _interopRequireDefault(_httpProxyMiddleware);
 
-var _Html = __webpack_require__(/*! ../../universal/components/Html */ "./src/universal/components/Html/index.js");
+var _html = __webpack_require__(/*! ../../universal/components/html */ "./src/universal/components/html/index.js");
 
-var _Html2 = _interopRequireDefault(_Html);
+var _html2 = _interopRequireDefault(_html);
 
-var _Splash = __webpack_require__(/*! ../../universal/components/Splash */ "./src/universal/components/Splash/index.js");
+var _splash = __webpack_require__(/*! ../../universal/components/splash */ "./src/universal/components/splash/index.js");
 
-var _Splash2 = _interopRequireDefault(_Splash);
+var _splash2 = _interopRequireDefault(_splash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mwDefault = exports.mwDefault = function mwDefault(req, res) {
-  var html = _react2.default.createElement(_Html2.default, {
-    content: _Splash2.default
+  var html = _react2.default.createElement(_html2.default, {
+    content: _splash2.default
   });
 
   res.status(200);
   res.send('<!doctype html>\n' + _server2.default.renderToStaticMarkup(html));
   res.end();
 };
+
+/***/ }),
+
+/***/ "./src/server/middlewares/graphql.js":
+/*!*******************************************!*\
+  !*** ./src/server/middlewares/graphql.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.mwGraphiql = exports.mwGraphql = undefined;
+
+var _apolloServerExpress = __webpack_require__(/*! apollo-server-express */ "apollo-server-express");
+
+var _graphql = __webpack_require__(/*! ../graphql */ "./src/server/graphql/index.js");
+
+var _graphql2 = _interopRequireDefault(_graphql);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mwGraphql = exports.mwGraphql = (0, _apolloServerExpress.graphqlExpress)({
+  schema: _graphql2.default
+});
+
+var mwGraphiql = exports.mwGraphiql = (0, _apolloServerExpress.graphiqlExpress)({
+  endpointURL: "/graphql"
+});
 
 /***/ }),
 
@@ -453,6 +515,77 @@ var route = exports.route = Router;
 
 /***/ }),
 
+/***/ "./src/server/routes/graphiql.js":
+/*!***************************************!*\
+  !*** ./src/server/routes/graphiql.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.route = exports.url = undefined;
+
+var _express = __webpack_require__(/*! express */ "express");
+
+var _bodyParser = __webpack_require__(/*! body-parser */ "body-parser");
+
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
+var _graphql = __webpack_require__(/*! ../middlewares/graphql */ "./src/server/middlewares/graphql.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Router = (0, _express.Router)();
+
+Router.use(_graphql.mwGraphiql);
+
+var url = exports.url = "/graphiql";
+
+var route = exports.route = Router;
+
+/***/ }),
+
+/***/ "./src/server/routes/graphql.js":
+/*!**************************************!*\
+  !*** ./src/server/routes/graphql.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.route = exports.url = undefined;
+
+var _express = __webpack_require__(/*! express */ "express");
+
+var _bodyParser = __webpack_require__(/*! body-parser */ "body-parser");
+
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
+var _graphql = __webpack_require__(/*! ../middlewares/graphql */ "./src/server/middlewares/graphql.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Router = (0, _express.Router)();
+
+Router.use(_bodyParser2.default.json());
+Router.use(_graphql.mwGraphql);
+
+var url = exports.url = "/graphql";
+
+var route = exports.route = Router;
+
+/***/ }),
+
 /***/ "./src/server/routes/statics.js":
 /*!**************************************!*\
   !*** ./src/server/routes/statics.js ***!
@@ -482,9 +615,9 @@ var route = exports.route = Router;
 
 /***/ }),
 
-/***/ "./src/universal/components/Html/index.js":
+/***/ "./src/universal/components/html/index.js":
 /*!************************************************!*\
-  !*** ./src/universal/components/Html/index.js ***!
+  !*** ./src/universal/components/html/index.js ***!
   \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -523,10 +656,6 @@ var _react2 = _interopRequireDefault(_react);
 var _propTypes = __webpack_require__(/*! prop-types */ "prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _styles = __webpack_require__(/*! ./styles.css */ "./src/universal/components/Html/styles.css");
-
-var _styles2 = _interopRequireDefault(_styles);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -579,28 +708,9 @@ exports.default = Html;
 
 /***/ }),
 
-/***/ "./src/universal/components/Html/styles.css":
+/***/ "./src/universal/components/splash/index.js":
 /*!**************************************************!*\
-  !*** ./src/universal/components/Html/styles.css ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "html {\n  min-height: 100%;\n  min-width: 100%;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./src/universal/components/Splash/index.js":
-/*!**************************************************!*\
-  !*** ./src/universal/components/Splash/index.js ***!
+  !*** ./src/universal/components/splash/index.js ***!
   \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -666,6 +776,17 @@ var Splash = function (_React$Component) {
 Splash.propTypes = {};
 
 exports.default = Splash;
+
+/***/ }),
+
+/***/ "apollo-server-express":
+/*!****************************************!*\
+  !*** external "apollo-server-express" ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-server-express");
 
 /***/ }),
 
@@ -757,6 +878,17 @@ module.exports = require("babel-runtime/regenerator");
 
 /***/ }),
 
+/***/ "body-parser":
+/*!******************************!*\
+  !*** external "body-parser" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("body-parser");
+
+/***/ }),
+
 /***/ "express":
 /*!**************************!*\
   !*** external "express" ***!
@@ -765,6 +897,28 @@ module.exports = require("babel-runtime/regenerator");
 /***/ (function(module, exports) {
 
 module.exports = require("express");
+
+/***/ }),
+
+/***/ "graphql":
+/*!**************************!*\
+  !*** external "graphql" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("graphql");
+
+/***/ }),
+
+/***/ "graphql-compose":
+/*!**********************************!*\
+  !*** external "graphql-compose" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("graphql-compose");
 
 /***/ }),
 
