@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import Config from '../config';
 
-import AllRoutes from "./routes/*";
+import AllRoutes from './routes/*';
 
 const app = new Express();
 
@@ -29,7 +29,7 @@ const init = async () => {
 };
 
 init().then( () => {
-  app.listen( Config['webapp_port'], () => {
-    console.log( "Application running", `PORT: ${Config['webapp_port']}` )
+  app.listen( Config[ 'webapp_port' ], () => {
+    console.log( 'Application running', `PORT: ${Config['webapp_port']}` )
   } );
 } );

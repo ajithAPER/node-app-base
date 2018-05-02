@@ -10,29 +10,29 @@ export default class Html extends React.Component {
   };
 
   static defaultProps = {
-    jsFileUrl: "/statics/js/index.js"
+    jsFileUrl: '/statics/js/index.js'
   };
 
   render() {
     return (
       <html
-        lang="en"
+        lang='en'
         >
         <head>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="shortcut icon" type="image/x-icon" href={ FavIcon } />
-          <link rel="icon" type="image/x-icon" href={ FavIcon } />
-          <link rel="stylesheet" type="text/css" href="/statics/css/index.css" />
+          <meta charSet='utf-8' />
+          <meta name='viewport' content='width=device-width, initial-scale=1' />
+          <link rel='shortcut icon' type='image/x-icon' href={ FavIcon } />
+          <link rel='icon' type='image/x-icon' href={ FavIcon } />
+          <link rel='stylesheet' type='text/css' href='/statics/css/index.css' />
         </head>
         <body
           >
           <div
-            id="application"
+            id='application'
             >
-            {this.props.children}
+            { this.props.children }
           </div>
-          <script src={this.props.jsFileUrl} charSet="UTF-8" />
+          <script src={ this.props.jsFileUrl } charSet='UTF-8' />
         </body>
       </html>
     );

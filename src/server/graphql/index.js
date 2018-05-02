@@ -12,6 +12,6 @@ _.each(AllQueries, ( { default: query } ) => {
   queries[ query.name ] = query;
 });
 
-GQC.rootQuery().addFields(queries);
+GQC.rootQuery().addFields( queries );
 
 export default GQC.buildSchema();

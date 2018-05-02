@@ -12,6 +12,6 @@ const Router = router();
 Router.use( BodyParser.json() );
 Router.use( MwGraphql );
 
-export const url = "/graphql";
+export const url = '/graphql';
 
 export const route = Router;

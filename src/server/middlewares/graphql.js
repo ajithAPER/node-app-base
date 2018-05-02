@@ -10,5 +10,5 @@ export const mwGraphql = GraphqlExpress( {
 } );
 
 export const mwGraphiql = GraphiqlExpress( {
-  endpointURL: "/graphql"
+  endpointURL: '/graphql'
 } );

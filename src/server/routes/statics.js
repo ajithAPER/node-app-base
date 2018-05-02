@@ -16,6 +16,6 @@ if (MwStaticsClient){
   Router.use( MwStaticsClient );
 }
 
-export const url = "/statics";
+export const url = '/statics';
 
 export const route = Router;

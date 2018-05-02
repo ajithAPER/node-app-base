@@ -9,9 +9,9 @@ export const mwSetCompressedJsUrl = ( req, res, next ) => {
   if (
     process.env.NODE_ENV !== 'development' &&
     req.headers[ 'accept-encoding' ] &&
-    (/gzip/).test(req.headers[ 'accept-encoding' ])
+    ( /gzip/ ).test( req.headers[ 'accept-encoding' ] )
   ){
-    res._jsFileUrl = "/statics/js/index.js.gz";
+    res._jsFileUrl = '/statics/js/index.js.gz';
   }
   next();
 };
@@ -19,7 +19,7 @@ export const mwSetCompressedJsUrl = ( req, res, next ) => {
 export const mwDefault = ( req, res ) => {
   const html = (
     <Html
-      jsFileUrl={res._jsFileUrl}
+      jsFileUrl={ res._jsFileUrl }
       >
       <Splash
         />

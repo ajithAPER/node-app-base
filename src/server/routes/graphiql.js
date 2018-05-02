@@ -11,6 +11,6 @@ const Router = router();
 
 Router.use( MwGraphiql );
 
-export const url = "/graphiql";
+export const url = '/graphiql';
 
 export const route = Router;

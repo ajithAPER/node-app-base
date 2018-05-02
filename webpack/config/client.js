@@ -1,14 +1,14 @@
-const Webpack = require('webpack');
-const Path  = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
+const Webpack = require( 'webpack' );
+const Path  = require( 'path' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const UglifyJSPlugin = require( 'uglifyjs-webpack-plugin' );
+const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
+const CompressionPlugin = require( 'compression-webpack-plugin' );
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = ( process.env.NODE_ENV !== 'production' );
 
-const init = (dir) => {
+const init = ( dir ) => {
   return {
     bail: !isDev,
     devtool: isDev ? 'cheap-module-source-map' : 'source-map',
@@ -112,11 +112,11 @@ const init = (dir) => {
         ),
         new CompressionPlugin(
           {
-            algorithm: "gzip",
+            algorithm: 'gzip',
             test: /\.(js|html)$/
           }
         ),
-        new OptimizeCSSAssetsPlugin({})
+        new OptimizeCSSAssetsPlugin( {} )
       ]
     },
     devServer: {

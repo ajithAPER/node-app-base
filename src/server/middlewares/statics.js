@@ -14,10 +14,10 @@ const mwStatics = Express.static(
   Path.join( process.cwd(), '/build/statics' )
 );
 
-const msGzipHeaders = (req, res, next) => {
+const msGzipHeaders = ( req, res, next ) => {
   if ( ( /.gz$/ ).test( req.originalUrl ) ){
-    res.set('Content-Encoding', 'gzip');
-    res.set('Content-Type', 'text/event-stream');
+    res.set( 'Content-Encoding', 'gzip' );
+    res.set( 'Content-Type', 'text/event-stream' );
   }
   next();
 }

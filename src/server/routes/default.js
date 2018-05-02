@@ -12,6 +12,6 @@ const Router = router();
 Router.use( MwSetCompressedJsUrl );
 Router.use( MwDefault )
 
-export const url = "";
+export const url = '';
 
 export const route = Router;
