@@ -4,7 +4,7 @@
   "description": "Basic setup project for react based project",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development concurrently -c blue,cyan,magenta \"RUN_ENV=client webpack-dev-server --mode=development -d --inline --no-info --port 3001 --config ./webpack/config\" \"RUN_ENV=server webpack --mode=development --watch --config ./webpack/config\" \"sleep 3 && nodemon --inspect --watch build/server build/server/index.js\"",
+    "dev": "NODE_ENV=development concurrently -c blue,cyan,magenta \"RUN_ENV=client webpack-dev-server --mode=development -d --inline --no-info --port 3001 --config ./webpack/config\" \"RUN_ENV=server webpack --mode=development --watch --config ./webpack/config\" \"sleep 3 && nodemon --inspect build/server.js\"",
     "dev-build": "rm -rf ./build; NODE_ENV=development concurrently -c blue,cyan \"RUN_ENV=server webpack --mode=development --progress --config ./webpack/config\" \"RUN_ENV=client webpack --mode=development --progress --config ./webpack/config\"",
     "build": "rm -rf ./build; NODE_ENV=production concurrently -c blue,cyan \"RUN_ENV=server webpack --mode=production --progress --config ./webpack/config\" \"RUN_ENV=client webpack --mode=production --progress --config ./webpack/config\""
   },
