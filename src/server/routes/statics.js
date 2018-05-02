@@ -4,11 +4,13 @@ import {
 
 import {
   mwStatics as MwStatics,
-  mwStaticsClient as MwStaticsClient
+  mwStaticsClient as MwStaticsClient,
+  msGzipHeaders as MsGzipHeaders
 } from '../middlewares/statics';
 
 const Router = router();
 
+Router.use( MsGzipHeaders );
 Router.use( MwStatics );
 if (MwStaticsClient){
   Router.use( MwStaticsClient );

@@ -1,8 +1,9 @@
 const Webpack = require('webpack');
 const Path  = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = ( process.env.NODE_ENV !== 'production' );
@@ -44,7 +45,7 @@ const init = (dir) => {
           use: [
             MiniCssExtractPlugin.loader,
             {
-              loader: "css-loader",
+              loader: 'css-loader',
               options: {
                 sourceMap: true,
                 publicPath: '/css/'
@@ -83,10 +84,12 @@ const init = (dir) => {
           'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }
       ),
-      new MiniCssExtractPlugin({
-        filename: "css/index.css",
-        chunkFilename: "index.css"
-      }),
+      new MiniCssExtractPlugin(
+        {
+        filename: 'css/index.css',
+        chunkFilename: 'index.css'
+        }
+      ),
     ],
     optimization: {
       minimizer: [
@@ -105,6 +108,12 @@ const init = (dir) => {
                 ascii_only: true
               }
             }
+          }
+        ),
+        new CompressionPlugin(
+          {
+            algorithm: "gzip",
+            test: /\.(js|html)$/
           }
         ),
         new OptimizeCSSAssetsPlugin({})

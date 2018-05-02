@@ -3,11 +3,13 @@ import {
 } from 'express';
 
 import {
-  mwDefault as MwDefault
+  mwDefault as MwDefault,
+  mwSetCompressedJsUrl as MwSetCompressedJsUrl
 } from '../middlewares/default';
 
 const Router = router();
 
+Router.use( MwSetCompressedJsUrl );
 Router.use( MwDefault )
 
 export const url = "";

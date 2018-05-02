@@ -5,8 +5,13 @@ import FavIcon from '../../images/favicon.ico';
 
 export default class Html extends React.Component {
   static propTypes = {
-    children: PropTypes.element.isRequired
-  }
+    children: PropTypes.element.isRequired,
+    jsFileUrl: PropTypes.string.isRequired
+  };
+
+  static defaultProps = {
+    jsFileUrl: "/statics/js/index.js"
+  };
 
   render() {
     return (
@@ -27,7 +32,7 @@ export default class Html extends React.Component {
             >
             {this.props.children}
           </div>
-          <script src="/statics/js/index.js" charSet="UTF-8" />
+          <script src={this.props.jsFileUrl} charSet="UTF-8" />
         </body>
       </html>
     );
