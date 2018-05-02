@@ -737,9 +737,15 @@ var Html = (_temp = _class = function (_React$Component) {
             },
             __self: this
           }),
-          _react2.default.createElement('link', { rel: 'stylesheet', type: 'text/css', href: '/statics/css/index.css', __source: {
+          _react2.default.createElement('link', { rel: 'icon', type: 'image/x-icon', href: _favicon2.default, __source: {
               fileName: _jsxFileName,
               lineNumber: 20
+            },
+            __self: this
+          }),
+          _react2.default.createElement('link', { rel: 'stylesheet', type: 'text/css', href: '/statics/css/index.css', __source: {
+              fileName: _jsxFileName,
+              lineNumber: 21
             },
             __self: this
           })
@@ -749,7 +755,7 @@ var Html = (_temp = _class = function (_React$Component) {
           {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 22
+              lineNumber: 23
             },
             __self: this
           },
@@ -759,7 +765,7 @@ var Html = (_temp = _class = function (_React$Component) {
               id: 'application',
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 24
+                lineNumber: 25
               },
               __self: this
             },
@@ -767,7 +773,7 @@ var Html = (_temp = _class = function (_React$Component) {
           ),
           _react2.default.createElement('script', { src: '/statics/js/index.js', charSet: 'UTF-8', __source: {
               fileName: _jsxFileName,
-              lineNumber: 29
+              lineNumber: 30
             },
             __self: this
           })
