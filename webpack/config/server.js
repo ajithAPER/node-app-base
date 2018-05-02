@@ -11,8 +11,8 @@ const init = (dir) => {
     target: 'node',
     entry: Path.join( dir, '/src/server/index.js' ),
     output: {
-      path: Path.join( dir, 'build/server' ),
-      filename: 'index.js',
+      path: Path.join( dir, 'build' ),
+      filename: 'server.js',
       publicPath: '/',
     },
     externals: [
@@ -39,6 +39,17 @@ const init = (dir) => {
           use: [
             'css-loader'
           ]
+        },
+        {
+          test: /\.(png|jpg|gif|ico)$/,
+          use: {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images/',
+              publicPath: '/statics/images/',
+              name: '[hash].[ext]'
+            }
+          }
         }
       ]
     },

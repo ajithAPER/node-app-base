@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import Config from '../config';
 
-import allRoutes from "./routes/*";
+import AllRoutes from "./routes/*";
 
 const app = new Express();
 
@@ -12,7 +12,7 @@ const init = async () => {
 
   //Server route definations
   _.each(
-    _.sortBy( allRoutes, [
+    _.sortBy( AllRoutes, [
       ({ route, url }) => {
         return url;
       }

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './styles.css';
-
 class Html extends React.Component {
   render() {
     return (

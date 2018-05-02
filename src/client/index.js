@@ -1,15 +1,22 @@
 import React from 'react';
 import {
-  render
+  render as Render
 } from 'react-dom';
+import {
+  ApolloProvider
+} from 'react-apollo';
 
-import Splash from '../universal/components/Splash';
+import ApolloClient from './apollo-client';
 
-import indexCss from './index.css';
+import Splash from '../universal/components/splash';
 
-render(
+import './index.css';
+
+Render(
   (
-    <Splash />
+    <ApolloProvider client={ApolloClient}>
+      <Splash />
+    </ApolloProvider>
   ),
   document.getElementById('application')
 );
