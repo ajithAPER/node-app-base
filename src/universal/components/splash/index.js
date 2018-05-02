@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Splash extends React.Component {
+export default class Splash extends React.Component {
+  static propTypes: {
+    content: PropTypes.func.isRequired
+  }
+
   render() {
     return (
       <div>
@@ -10,8 +14,3 @@ class Splash extends React.Component {
     );
   }
 }
-
-Splash.propTypes = {
-};
-
-export default Splash;

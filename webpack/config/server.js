@@ -45,7 +45,7 @@ const init = (dir) => {
           use: {
             loader: 'file-loader',
             options: {
-              outputPath: 'images/',
+              outputPath: 'statics/images/',
               publicPath: '/statics/images/',
               name: '[hash].[ext]'
             }

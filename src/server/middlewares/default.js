@@ -7,9 +7,10 @@ import Splash from '../../universal/components/splash';
 
 export const mwDefault = ( req, res ) => {
   const html = (
-    <Html
-      content={Splash}
-      />
+    <Html>
+      <Splash
+        /> 
+    </Html>
   );
 
   res.status(200);
