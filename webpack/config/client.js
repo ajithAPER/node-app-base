@@ -34,13 +34,6 @@ const init = ( dir ) => {
           }
         },
         {
-          test: /\.(graphql|gql)$/,
-          exclude: /(node_modules)/,
-          use: {
-            loader: 'graphql-tag/loader'
-          }
-        },
-        {
           test: /\.css$/,
           use: [
             MiniCssExtractPlugin.loader,
