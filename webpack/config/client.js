@@ -65,7 +65,7 @@ const init = ( dir ) => {
           }
         },
         {
-          test: /\.(woff2|ttf|eot)$/,
+          test: /\.(woff|woff2|ttf|eot)$/,
           use: {
             loader: 'file-loader',
             options: {

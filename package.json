@@ -11,7 +11,7 @@
   "keywords": [
     "apollo"
   ],
-  "author": "Ajith K S, Harman Singh",
+  "author": "Ajith K S",
   "license": "ISC",
   "dependencies": {
     "apollo-cache-inmemory": "^1.1.12",
