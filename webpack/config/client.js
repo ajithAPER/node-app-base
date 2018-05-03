@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const UglifyJSPlugin = require( 'uglifyjs-webpack-plugin' );
 const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
 const CompressionPlugin = require( 'compression-webpack-plugin' );
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const AutoPrefixer = require('autoprefixer');
 
 const isDev = ( process.env.NODE_ENV !== 'production' );
 
@@ -41,7 +41,7 @@ const init = ( dir ) => {
           }
         },
         {
-          test: /\.css$/,
+          test: /\.(css|scss|sass)$/,
           use: [
             MiniCssExtractPlugin.loader,
             {
@@ -49,6 +49,21 @@ const init = ( dir ) => {
               options: {
                 sourceMap: true,
                 publicPath: '/css/'
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  AutoPrefixer
+                ],
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
               }
             }
           ]

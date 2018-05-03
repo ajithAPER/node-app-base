@@ -10,11 +10,9 @@ import ApolloClient from './apollo-client';
 
 import Splash from '../universal/components/splash';
 
-import './index.css';
-
 Render(
   (
-    <ApolloProvider client={ApolloClient}>
+    <ApolloProvider client={ ApolloClient }>
       <Splash />
     </ApolloProvider>
   ),
