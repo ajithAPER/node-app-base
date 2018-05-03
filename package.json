@@ -1,7 +1,7 @@
 {
   "name": "app-base",
   "version": "1.0.0",
-  "description": "Basic setup project for react, express, graphql and apollo client stack",
+  "description": "Basic setup project for react, express",
   "main": "index.js",
   "scripts": {
     "dev": "rm -rf ./build; NODE_ENV=development concurrently -c blue,cyan,magenta \"RUN_ENV=client webpack-dev-server --mode=development -d --inline --no-info --port 3001 --config ./webpack/config\" \"RUN_ENV=server webpack --mode=development --watch --config ./webpack/config\" \"sleep 3 && nodemon --inspect --watch build/server.js build/server.js\"",
