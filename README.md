@@ -4,4 +4,4 @@
 * Clone project
 * Run ``npm install``.
 * Run ``npm run dev`` for development.
-* Run ``npm run build`` to build production ready code. Code get build into ``./build/`` directory.
+* Run ``npm run build`` to build production ready code. Code gets transpiled into ``./build/`` directory.
