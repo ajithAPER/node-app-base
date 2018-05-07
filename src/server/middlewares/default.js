@@ -11,7 +11,7 @@ export const mwSetCompressedJsUrl = ( req, res, next ) => {
     req.headers[ 'accept-encoding' ] &&
     ( /gzip/ ).test( req.headers[ 'accept-encoding' ] )
   ){
-    res._jsFileUrl = '/statics/js/index.js';
+    res._jsFileUrl = '/statics/js/index.js.gz';
   }
   next();
 };
