@@ -155,114 +155,6 @@ exports.default = config;
 
 /***/ }),
 
-/***/ "./src/server/graphql/index.js":
-/*!*************************************!*\
-  !*** ./src/server/graphql/index.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _graphqlCompose = __webpack_require__(/*! graphql-compose */ "graphql-compose");
-
-var _lodash = __webpack_require__(/*! lodash */ "lodash");
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _test = __webpack_require__(/*! ./queries/test.js */ "./src/server/graphql/queries/test.js");
-
-var AllQueries0 = _interopRequireWildcard(_test);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var AllQueries = [AllQueries0];
-
-//initailizing all queries
-var queries = {};
-
-_lodash2.default.each(AllQueries, function (_ref) {
-  var query = _ref.default;
-
-  queries[query.name] = query;
-});
-
-_graphqlCompose.GQC.rootQuery().addFields(queries);
-
-exports.default = _graphqlCompose.GQC.buildSchema();
-
-/***/ }),
-
-/***/ "./src/server/graphql/queries/test.js":
-/*!********************************************!*\
-  !*** ./src/server/graphql/queries/test.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _regenerator = __webpack_require__(/*! babel-runtime/regenerator */ "babel-runtime/regenerator");
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _asyncToGenerator2 = __webpack_require__(/*! babel-runtime/helpers/asyncToGenerator */ "babel-runtime/helpers/asyncToGenerator");
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-var _graphql = __webpack_require__(/*! graphql */ "graphql");
-
-var _graphqlCompose = __webpack_require__(/*! graphql-compose */ "graphql-compose");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var test = new _graphqlCompose.Resolver({
-  name: 'test',
-  type: _graphql.GraphQLString,
-  resolve: function () {
-    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(_ref) {
-      var source = _ref.source,
-          args = _ref.args,
-          context = _ref.context,
-          info = _ref.info;
-      return _regenerator2.default.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              return _context.abrupt('return', 'Working');
-
-            case 1:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, undefined);
-    }));
-
-    function resolve(_x) {
-      return _ref2.apply(this, arguments);
-    }
-
-    return resolve;
-  }()
-});
-
-exports.default = test;
-
-/***/ }),
-
 /***/ "./src/server/index.js":
 /*!*****************************!*\
   !*** ./src/server/index.js ***!
@@ -299,23 +191,15 @@ var _default = __webpack_require__(/*! ./routes/default.js */ "./src/server/rout
 
 var AllRoutes0 = _interopRequireWildcard(_default);
 
-var _graphiql = __webpack_require__(/*! ./routes/graphiql.js */ "./src/server/routes/graphiql.js");
-
-var AllRoutes1 = _interopRequireWildcard(_graphiql);
-
-var _graphql = __webpack_require__(/*! ./routes/graphql.js */ "./src/server/routes/graphql.js");
-
-var AllRoutes2 = _interopRequireWildcard(_graphql);
-
 var _statics = __webpack_require__(/*! ./routes/statics.js */ "./src/server/routes/statics.js");
 
-var AllRoutes3 = _interopRequireWildcard(_statics);
+var AllRoutes1 = _interopRequireWildcard(_statics);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AllRoutes = [AllRoutes0, AllRoutes1, AllRoutes2, AllRoutes3];
+var AllRoutes = [AllRoutes0, AllRoutes1];
 
 var app = new _express2.default();
 
@@ -435,39 +319,6 @@ var mwDefault = exports.mwDefault = function mwDefault(req, res) {
 
 /***/ }),
 
-/***/ "./src/server/middlewares/graphql.js":
-/*!*******************************************!*\
-  !*** ./src/server/middlewares/graphql.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.mwGraphiql = exports.mwGraphql = undefined;
-
-var _apolloServerExpress = __webpack_require__(/*! apollo-server-express */ "apollo-server-express");
-
-var _graphql = __webpack_require__(/*! ../graphql */ "./src/server/graphql/index.js");
-
-var _graphql2 = _interopRequireDefault(_graphql);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mwGraphql = exports.mwGraphql = (0, _apolloServerExpress.graphqlExpress)({
-  schema: _graphql2.default
-});
-
-var mwGraphiql = exports.mwGraphiql = (0, _apolloServerExpress.graphiqlExpress)({
-  endpointURL: '/graphql'
-});
-
-/***/ }),
-
 /***/ "./src/server/middlewares/statics.js":
 /*!*******************************************!*\
   !*** ./src/server/middlewares/statics.js ***!
@@ -544,77 +395,6 @@ Router.use(_default.mwSetCompressedJsUrl);
 Router.use(_default.mwDefault);
 
 var url = exports.url = '';
-
-var route = exports.route = Router;
-
-/***/ }),
-
-/***/ "./src/server/routes/graphiql.js":
-/*!***************************************!*\
-  !*** ./src/server/routes/graphiql.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.route = exports.url = undefined;
-
-var _express = __webpack_require__(/*! express */ "express");
-
-var _bodyParser = __webpack_require__(/*! body-parser */ "body-parser");
-
-var _bodyParser2 = _interopRequireDefault(_bodyParser);
-
-var _graphql = __webpack_require__(/*! ../middlewares/graphql */ "./src/server/middlewares/graphql.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Router = (0, _express.Router)();
-
-Router.use(_graphql.mwGraphiql);
-
-var url = exports.url = '/graphiql';
-
-var route = exports.route = Router;
-
-/***/ }),
-
-/***/ "./src/server/routes/graphql.js":
-/*!**************************************!*\
-  !*** ./src/server/routes/graphql.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.route = exports.url = undefined;
-
-var _express = __webpack_require__(/*! express */ "express");
-
-var _bodyParser = __webpack_require__(/*! body-parser */ "body-parser");
-
-var _bodyParser2 = _interopRequireDefault(_bodyParser);
-
-var _graphql = __webpack_require__(/*! ../middlewares/graphql */ "./src/server/middlewares/graphql.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Router = (0, _express.Router)();
-
-Router.use(_bodyParser2.default.json());
-Router.use(_graphql.mwGraphql);
-
-var url = exports.url = '/graphql';
 
 var route = exports.route = Router;
 
@@ -898,17 +678,6 @@ module.exports = "/statics/images/237587dfe0b89e49b328d24fa49ef6b0.ico";
 
 /***/ }),
 
-/***/ "apollo-server-express":
-/*!****************************************!*\
-  !*** external "apollo-server-express" ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("apollo-server-express");
-
-/***/ }),
-
 /***/ "babel-runtime/core-js/object/assign":
 /*!******************************************************!*\
   !*** external "babel-runtime/core-js/object/assign" ***!
@@ -997,17 +766,6 @@ module.exports = require("babel-runtime/regenerator");
 
 /***/ }),
 
-/***/ "body-parser":
-/*!******************************!*\
-  !*** external "body-parser" ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("body-parser");
-
-/***/ }),
-
 /***/ "express":
 /*!**************************!*\
   !*** external "express" ***!
@@ -1016,28 +774,6 @@ module.exports = require("body-parser");
 /***/ (function(module, exports) {
 
 module.exports = require("express");
-
-/***/ }),
-
-/***/ "graphql":
-/*!**************************!*\
-  !*** external "graphql" ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("graphql");
-
-/***/ }),
-
-/***/ "graphql-compose":
-/*!**********************************!*\
-  !*** external "graphql-compose" ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("graphql-compose");
 
 /***/ }),
 
