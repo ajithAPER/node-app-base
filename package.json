@@ -4,9 +4,9 @@
   "description": "Basic setup project for react, express, graphql and apollo client stack",
   "main": "index.js",
   "scripts": {
-    "dev": "rm -rf ./build; NODE_ENV=development concurrently -c blue,cyan,magenta \"RUN_ENV=client webpack-dev-server --mode=development -d --inline --no-info --port 3001 --config ./webpack/config\" \"RUN_ENV=server webpack --mode=development --watch --config ./webpack/config\" \"sleep 3 && nodemon --inspect --watch build/server.js build/server.js\"",
-    "dev-build": "rm -rf ./build; NODE_ENV=production concurrently -c blue,cyan \"RUN_ENV=server webpack --mode=development --progress --config ./webpack/config\" \"RUN_ENV=client webpack --mode=development --progress --config ./webpack/config\"",
-    "build": "rm -rf ./build; NODE_ENV=production concurrently -c blue,cyan \"RUN_ENV=server webpack --mode=production --progress --config ./webpack/config\" \"RUN_ENV=client webpack --mode=production --progress --config ./webpack/config\""
+    "dev": "rm -rf ./dist; NODE_ENV=development concurrently -c blue,cyan,magenta \"RUN_ENV=client webpack-dev-server --mode=development -d --inline --no-info --port 3001 --config ./build/config\" \"RUN_ENV=server webpack --mode=development --watch --config ./build/config\" \"sleep 3 && nodemon --inspect --watch dist/server.js dist/server.js\"",
+    "dev-build": "rm -rf ./dist; NODE_ENV=development concurrently -c blue,cyan \"RUN_ENV=server webpack --mode=development --progress --config ./build/config\" \"RUN_ENV=client webpack --mode=development --progress --config ./build/config\"",
+    "build": "rm -rf ./dist; NODE_ENV=production concurrently -c blue,cyan \"RUN_ENV=server webpack --mode=production --progress --config ./build/config\" \"RUN_ENV=client webpack --mode=production --progress --config ./build/config\""
   },
   "keywords": [
     "apollo"
