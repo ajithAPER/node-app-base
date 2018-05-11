@@ -14,7 +14,7 @@ const init = ( dir ) => {
     devtool: isDev ? 'cheap-module-source-map' : 'source-map',
     entry: Path.join( dir, '/src/client/index.js' ),
     output: {
-      path: Path.join( dir, 'build/statics/' ),
+      path: Path.join( dir, 'dist/statics/' ),
       filename: 'js/index.js'
     },
     module: {
@@ -113,7 +113,7 @@ const init = ( dir ) => {
       ]
     },
     devServer: {
-      contentBase: Path.join( dir, 'build/statics/' ),
+      contentBase: Path.join( dir, 'dist/statics/' ),
       disableHostCheck: true
     }
   };

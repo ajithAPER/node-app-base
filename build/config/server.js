@@ -11,7 +11,7 @@ const init = ( dir ) => {
     target: 'node',
     entry: Path.join( dir, '/src/server/index.js' ),
     output: {
-      path: Path.join( dir, 'build' ),
+      path: Path.join( dir, 'dist' ),
       filename: 'server.js',
       publicPath: '/',
     },
