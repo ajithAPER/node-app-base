@@ -6,6 +6,8 @@ import {
   ApolloProvider
 } from 'react-apollo';
 
+import Config from '../config';
+
 import ApolloClient from './apollo-client';
 
 import Splash from '../universal/components/splash';

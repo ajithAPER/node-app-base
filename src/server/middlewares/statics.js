@@ -2,11 +2,11 @@ import Express, {
   Router as router
 } from 'express';
 import Path from 'path';
-import Proxy from 'http-proxy-middleware';
 
 let mwStaticsClient;
 
 if ( process.env.NODE_ENV === 'development' ) {
+  const Proxy = require('http-proxy-middleware');
   mwStaticsClient = Proxy( { target: 'http://localhost:3001', pathRewrite: { '^/statics': '' } } );
 }
 
