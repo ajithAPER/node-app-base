@@ -11,11 +11,25 @@ if ( process.env.NODE_ENV === 'development' ) {
 }
 
 const mwStatics = Express.static(
-  Path.join( process.cwd(), '/build/statics' )
+  Path.join( process.cwd(), '/dist/statics' )
 );
 
-const msGzipHeaders = ( req, res, next ) => {
-  if ( ( /.gz$/ ).test( req.originalUrl ) ){
+const mwGzipRedirect = ( req, res, next ) => {
+  if (
+    process.env.NODE_ENV !== 'development' &&
+    ( /.js$/ ).test( req.url ) &&
+    req.headers[ 'accept-encoding' ] &&
+    ( /gzip/ ).test( req.headers[ 'accept-encoding' ] )
+  ){
+    req.url = `${req.url}.gz`;
+
+    //res.redirect( `${req.url}.gz` );
+  }
+  next();
+}
+
+const mwGzipHeaders = ( req, res, next ) => {
+  if ( ( /.gz$/ ).test( req.url ) ){
     res.set( 'Content-Encoding', 'gzip' );
     res.set( 'Content-Type', 'text/event-stream' );
   }
@@ -23,7 +37,8 @@ const msGzipHeaders = ( req, res, next ) => {
 }
 
 export {
-  msGzipHeaders,
+  mwGzipRedirect,
+  mwGzipHeaders,
   mwStaticsClient,
   mwStatics
 };

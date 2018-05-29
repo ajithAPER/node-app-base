@@ -5,12 +5,14 @@ import {
 import {
   mwStatics as MwStatics,
   mwStaticsClient as MwStaticsClient,
-  msGzipHeaders as MsGzipHeaders
+  mwGzipHeaders as MwGzipHeaders,
+  mwGzipRedirect as MwGzipRedirect
 } from '../middlewares/statics';
 
 const Router = router();
 
-Router.use( MsGzipHeaders );
+Router.use( MwGzipRedirect );
+Router.use( MwGzipHeaders );
 Router.use( MwStatics );
 if (MwStaticsClient){
   Router.use( MwStaticsClient );

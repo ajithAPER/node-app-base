@@ -9,7 +9,6 @@ import {
 
 const Router = router();
 
-Router.use( MwSetCompressedJsUrl );
 Router.use( MwDefault )
 
 export const url = '';
